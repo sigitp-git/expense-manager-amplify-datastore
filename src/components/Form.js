@@ -72,37 +72,45 @@ const Form = (props) => {
 
   return (
     <>
-      <form onSubmit={(e) => onFormSubmit(e)}>
+      <form className='form' onSubmit={(e) => onFormSubmit(e)}>
         {status && <p className='form__status'>{status}</p>}
-        <DatePicker value={datePicker} onChange={onDatePickChange} />
         <div>
-          <input
-            autoFocus
-            placeholder='description'
-            value={description}
-            onChange={(e) => onChangeDescription(e)}
+          <DatePicker
+            className='date-picker'
+            value={datePicker}
+            onChange={onDatePickChange}
           />
         </div>
+        <input
+          className='text-input'
+          autoFocus
+          placeholder='description'
+          value={description}
+          onChange={(e) => onChangeDescription(e)}
+        />
+        <input
+          className='text-input'
+          placeholder='amount'
+          value={amount}
+          onChange={(e) => onChangeAmount(e)}
+        />
+        <textarea
+          className='textarea'
+          placeholder='note'
+          value={note}
+          onChange={(e) => onChangeNote(e)}
+        ></textarea>
         <div>
-          <input
-            placeholder='amount'
-            value={amount}
-            onChange={(e) => onChangeAmount(e)}
-          />
-        </div>
-        <div>
-          <textarea
-            placeholder='note'
-            value={note}
-            onChange={(e) => onChangeNote(e)}
-          ></textarea>
-        </div>
-        <div>
-          <button>Save</button>
+          <button className='button button--dark'>Save</button>
         </div>
       </form>
       {/* props.history from Add.js or Edit.js (both from AppRouter.js) */}
-      <button onClick={() => props.history.push('/')}>Cancel</button>
+      <button
+        className='button button--dark'
+        onClick={() => props.history.push('/')}
+      >
+        Cancel
+      </button>
     </>
   )
 }

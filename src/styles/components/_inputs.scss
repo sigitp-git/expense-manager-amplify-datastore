@@ -1,0 +1,24 @@
+.text-input {
+    border: 1px solid #cacccd;
+    height: 50px;
+    padding: $s-size;
+    font-size: $font-large;
+    font-weight: 300;
+}
+
+.select {
+    // extend, override
+    @extend .text-input;
+}
+
+.date-picker {
+    border: none;
+    height: 50px;
+    font-size: $font-large;
+    font-weight: 300;
+}
+
+.textarea {
+    @extend .text-input;
+    height: 10rem;
+}

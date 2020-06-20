@@ -11,4 +11,15 @@ const unixToString = (unixtimestamp) => {
   return stringTimeStamp
 }
 
-export default unixToString
+const unixToStringNoTime = (unixtimestamp) => {
+  const dateObject = new Date(unixtimestamp)
+  const stringTimeStamp = dateObject.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+
+  return stringTimeStamp
+}
+
+export { unixToStringNoTime, unixToString as default }

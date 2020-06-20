@@ -1,0 +1,13 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    //direct descendant
+    > * {
+        margin-bottom: $m-size;
+    }
+}
+
+.form__status {
+    margin: 0 0 $m-size 0;
+    font-style: italic;
+}

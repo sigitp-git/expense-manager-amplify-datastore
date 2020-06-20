@@ -1,0 +1,64 @@
+.list-header {
+    background: $light-grey;
+    border: 1px solid darken($light-grey, 7%);
+    color: $dark-grey;
+    display: flex;
+    justify-content: space-between;
+    padding: $s-size $m-size;
+}
+
+.list-body {
+    margin-bottom: $m-size; // mobile
+    @media (min-width: $desktop-breakpoint) {
+        margin-bottom: $l-size; // desktop
+    }
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column; // mobile view
+    border: 1px solid darken($light-grey, 7%);
+    border-top: none; // remove only top to avoid double border
+    color: $dark-blue;
+    padding: $s-size;
+    text-decoration: none;
+    transition: background .5s ease;
+    &:hover {
+        background: $light-grey;
+    }
+    //setup desktop view
+    @media (min-width: $desktop-breakpoint) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $s-size;
+        align-items: center;
+    }
+}
+
+.list-item__title {
+    margin: 0;
+    word-break: break-all; // break very long hacker words
+}
+
+.list-item__subtitle {
+    color: $grey;
+    font-size: $font-small;
+}
+
+.list-item__date {
+    margin: $s-size 0 0 0; // mobile view
+    @media (min-width: $desktop-breakpoint) {
+        margin: 0; // desktop view
+        padding-left: $s-size;
+    }
+}
+
+.list-item--empty {
+    align-items: center;
+    justify-content: center;
+    padding: $m-size;
+    &:hover { // override hover during empty
+        background: none;
+    }
+    color: $dark-grey;
+}

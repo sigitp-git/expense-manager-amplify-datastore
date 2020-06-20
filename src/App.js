@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react'
-import './App.css'
+import './styles/styles.scss'
 import Context from './context/context'
 import AppRouter from './router/AppRouter'
 import expenseReducer from './reducer/expense-reducer'
@@ -39,7 +39,7 @@ const App = () => {
     }
   }, [])
 
-  // save expenses state change to localStorage
+  // save expenses state (array of objects) change to localStorage
   useEffect(() => {
     localStorage.setItem('expenses', JSON.stringify(expenses))
   }, [expenses])

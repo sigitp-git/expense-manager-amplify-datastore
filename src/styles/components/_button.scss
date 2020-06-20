@@ -1,0 +1,26 @@
+.button {
+    background: $light-blue;
+    color: white;
+    border: none;
+    // display: inline-block is for link converted to button using className='button'. text dcoration as well
+    display: inline-block;
+    text-decoration: none;
+    padding: $s-size $m-size;
+    // line-height is for button transformed into link
+    line-height: 1;
+    font-weight: 300;
+    font-size: $font-large;
+}
+
+.button--dark {
+    background: $dark-green;
+}
+
+.button--grey {
+    background: $dark-grey;
+    margin-left: $m-size;
+}
+
+.button--link {
+    background: none;
+}

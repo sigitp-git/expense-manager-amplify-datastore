@@ -1,0 +1,33 @@
+// login page box layout. vh is viewport height, width for vw
+.box-layout {
+    background-image: url('/images/bg.jpg');
+    background-size: cover;
+    // flex div starts, justify-content is horizontal align, alignt-items is vertical align
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // flex div ends
+    height: 100vh;
+    width: 100vw;
+}
+
+.box-layout__box {
+    background: fade-out(white, .7);
+    border-radius: 10px;
+    text-align: center;
+    width: 40rem;
+    height: 30rem;
+    padding: $l-size $m-size;
+}
+
+.box-layout__title {
+    margin: 0 0 $m-size 0;
+    line-height: 1;
+    color: rgb(113, 85, 85);
+}
+
+.box-layout__subtitle {
+    margin: 0 0 7rem 0;
+    line-height: 1;
+    color: rgb(113, 85, 85);
+}

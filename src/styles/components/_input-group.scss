@@ -1,0 +1,18 @@
+.input-group {
+    display: flex;
+    flex-direction: column; // for smaller mobile screen
+    margin-bottom: $m-size; // for smaller mobile screen
+    @media (min-width: $desktop-breakpoint) {
+        flex-direction: row; // for desktop screen
+        margin-bottom: $l-size; // for desktop screen
+        align-items: center;
+        flex-grow: initial;
+    }
+}
+
+.input-group__item {
+    margin-bottom: $s-size; // for smaller mobile screen
+    @media (min-width: $desktop-breakpoint) {
+        margin: 0 $s-size 0 0; // remove margin bottom for desktop screen, but s-size on right
+    }
+}

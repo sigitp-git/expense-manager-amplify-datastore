@@ -1,0 +1,17 @@
+.show-for-mobile {
+    // for mobile show these:
+
+    // if above the breakpoint, show none
+    @media (min-width: $desktop-breakpoint) {
+        display: none
+    }
+}
+
+.show-for-desktop {
+    // for desktop show these:
+
+    // if below the breakpoint, show none, non-overlapping by -.01rem
+    @media (max-width: $desktop-breakpoint - .01rem) {
+        display: none
+    }
+}
