@@ -2,7 +2,8 @@ import React, { useState, useReducer } from 'react'
 import './App.css'
 import Context from './context/context'
 import AppRouter from './router/AppRouter'
-import expensesReducer from './reducer/expense-reducer'
+import expenseReducer from './reducer/expense-reducer'
+import filterReducer from './reducer/filter-reducer'
 
 const App = () => {
   const defExpenses = [
@@ -21,11 +22,35 @@ const App = () => {
       amount: 53354,
     },
   ]
-  const [expenses, dispatchExpenses] = useReducer(expensesReducer, defExpenses)
+  const [expenses, dispatchExpenses] = useReducer(expenseReducer, defExpenses)
+
+  const date = new Date(),
+    y = date.getFullYear(),
+    m = date.getMonth()
+  const firstDay = new Date(y, m, 1)
+  const lastDay = new Date(y, m + 1, 0)
+
+  const defFilters = {
+    text: '',
+    sortBy: 'date',
+    startDate: firstDay,
+    endDate: lastDay,
+  }
+
+  const [filters, dispatchFilters] = useReducer(filterReducer, defFilters)
   const [status, setStatus] = useState('Please add Expense below')
 
   return (
-    <Context.Provider value={{ expenses, dispatchExpenses, status, setStatus }}>
+    <Context.Provider
+      value={{
+        expenses,
+        dispatchExpenses,
+        status,
+        setStatus,
+        filters,
+        dispatchFilters,
+      }}
+    >
       <AppRouter />
     </Context.Provider>
   )

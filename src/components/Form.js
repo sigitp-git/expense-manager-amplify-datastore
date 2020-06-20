@@ -65,35 +65,38 @@ const Form = (props) => {
   }
 
   return (
-    <form onSubmit={(e) => onFormSubmit(e)}>
-      {status && <p className='form__status'>{status}</p>}
-      <DatePicker value={datePicker} onChange={onDatePickChange} />
-      <div>
-        <input
-          autoFocus
-          placeholder='description'
-          value={description}
-          onChange={(e) => onChangeDescription(e)}
-        />
-      </div>
-      <div>
-        <input
-          placeholder='amount'
-          value={amount}
-          onChange={(e) => onChangeAmount(e)}
-        />
-      </div>
-      <div>
-        <textarea
-          placeholder='note'
-          value={note}
-          onChange={(e) => onChangeNote(e)}
-        ></textarea>
-      </div>
-      <div>
-        <button>Save</button>
-      </div>
-    </form>
+    <>
+      <form onSubmit={(e) => onFormSubmit(e)}>
+        {status && <p className='form__status'>{status}</p>}
+        <DatePicker value={datePicker} onChange={onDatePickChange} />
+        <div>
+          <input
+            autoFocus
+            placeholder='description'
+            value={description}
+            onChange={(e) => onChangeDescription(e)}
+          />
+        </div>
+        <div>
+          <input
+            placeholder='amount'
+            value={amount}
+            onChange={(e) => onChangeAmount(e)}
+          />
+        </div>
+        <div>
+          <textarea
+            placeholder='note'
+            value={note}
+            onChange={(e) => onChangeNote(e)}
+          ></textarea>
+        </div>
+        <div>
+          <button>Save</button>
+        </div>
+      </form>
+      <button onClick={() => props.history.push('/')}>Cancel</button>
+    </>
   )
 }
 

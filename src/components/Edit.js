@@ -10,6 +10,8 @@ const Edit = (props) => {
     <>
       <h1>Edit Expense</h1>
       <Form
+        // props.history passed from AppRouter.js Router Component, passed to Form.js for Cancel button redirect
+        history={props.history}
         // this props.expense is going to be used by useEffect on the Form component
         expense={expenses.find(
           (expense) => expense.id === props.match.params.id
