@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Context from '../context/context'
 import Form from './Form'
 import Footer from './Footer'
@@ -22,7 +22,7 @@ const Edit = (props) => {
   const onSubmitDelete = () => {
     confirmAlert({
       title: 'Confirm Delete',
-      message: 'Are you sure you want to delete?',
+      message: `Are you sure you want to delete ${expense.description} note?`,
       buttons: [
         {
           label: 'Yes',

@@ -14,6 +14,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
         - sortBy, default: 'date', other option: 'amount'
         - startDate, default: firstDay
         - endDate, default: lastDay
+    - status (printing messages to dashboard during CRUD operations)
     - auth, default: empty object {}, contains: { uid: action.uid }
 - Sync state with localStorage on initial App mount
 - Save state to localStorage only on dependency-state changes
