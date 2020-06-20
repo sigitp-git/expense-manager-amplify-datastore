@@ -42,6 +42,12 @@ const Form = (props) => {
       setDescription(props.expense.description)
       setAmount((props.expense.amount / 100).toString())
       setNote(props.expense.note)
+      setStatus(`Editing ${props.expense.description} note`)
+    }
+
+    // unmount editing mode, clear status back to default
+    return () => {
+      setStatus('Please add Expense below')
     }
   }, [props.expense])
 
