@@ -1,5 +1,25 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Objectives
+- Expense Manager with React Hooks: useState, useEffect, useReducer, useContext
+- All States managed by React Hooks, no Redux
+- States:
+    - expenses (only sync expenses state), default: empty array []
+        - date
+        - title
+        - amount
+        - note
+    - filters
+        - text, default: ''
+        - sortBy, default: 'date', other option: 'amount'
+        - startDate, default: firstDay
+        - endDate, default: lastDay
+    - auth, default: empty object {}, contains: { uid: action.uid }
+- Sync state with localStorage on initial App mount
+- Save state to localStorage only on dependency-state changes
+- Integrate Amplify DataStore, replacing localStorage
+- Offline and Online scenarios with Amplify DataStore
+
 ## Available Scripts
 
 In the project directory, you can run:
