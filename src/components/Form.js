@@ -49,7 +49,7 @@ const Form = (props) => {
     return () => {
       setStatus('Please add Expense below')
     }
-  }, [props.expense])
+  }, [props.expense, setStatus])
 
   // Reusable onFormSubmit(), props.onSubmit passed by Add.js or Edit.js
   const onFormSubmit = (e) => {
@@ -101,6 +101,7 @@ const Form = (props) => {
           <button>Save</button>
         </div>
       </form>
+      {/* props.history from Add.js or Edit.js (both from AppRouter.js) */}
       <button onClick={() => props.history.push('/')}>Cancel</button>
     </>
   )

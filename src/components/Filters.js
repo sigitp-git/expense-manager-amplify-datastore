@@ -34,7 +34,7 @@ const Filters = () => {
     }
   }
 
-  console.log(filters)
+  //console.log(filters)
 
   return (
     <div>
