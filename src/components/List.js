@@ -11,8 +11,8 @@ const List = () => {
     return expenses
       .filter((exp) => {
         const textMatch =
-          exp.description.toLowerCase().includes(text) ||
-          exp.note.toLowerCase().includes(text)
+          exp.description.toLowerCase().includes(text.toLowerCase()) ||
+          exp.note.toLowerCase().includes(text.toLowerCase())
 
         // startDate and endDate is in date format, change to Unix timestamp by using .getTime()
         // exp.createdAt is in Unix Timestamp
@@ -52,7 +52,8 @@ const List = () => {
       <div className='list-body'>
         <h2 className='page-header__title'>
           Viewing <span>{filteredExpenses.length}</span> expenses, total{' '}
-          <span>{numeral(totalFilteredAmount / 100).format('$0,0.00')}</span> {timeRange}
+          <span>{numeral(totalFilteredAmount / 100).format('$0,0.00')}</span>{' '}
+          {timeRange}
         </h2>
       </div>
       <div className='list-header'>
