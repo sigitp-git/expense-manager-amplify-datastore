@@ -1,14 +1,19 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Manage Application State with React Hooks and Amplify DataStore
+
+
 
 ## Objectives
+
 - Expense Manager with React Hooks: useState, useEffect, useReducer, useContext
+
 - All States managed by React Hooks, no Redux
+
 - States:
-    - expenses (only sync expenses state), default: empty array []
-        - id (ID!)
-        - date (UNIX Timestamp, Int!)
+    - expenses => Sync expenses state with Amplify DataStore for Offline and Online persistent data
+        - id (ID! on schema.graphql)
+        - date (UNIX Timestamp for sorting, Float! on schema.graphql)
         - description (String!)
-        - amount (String! -> ParseFloat)
+        - amount (String! => ParseFloat for processing)
         - note (String)
     - filters
         - text, default: ''
@@ -16,13 +21,219 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
         - startDate, default: firstDay
         - endDate, default: lastDay
     - status (printing messages to dashboard during CRUD operations)
-    - auth, default: empty object {}, contains: { uid: action.uid }
-- Sync state with localStorage on initial App mount
-- Save state to localStorage only on dependency-state changes
-- Integrate Amplify DataStore, replacing localStorage
-- Offline and Online scenarios with Amplify DataStore
+    
+        
+    
+- Sync state with Amplify DataStore on initial App mount
 
-## Available Scripts
+- Save state to Amplify DataStore only on dependency-state changes (expenses state)
+
+- Integrate Amplify DataStore
+
+- Offline and Online support with Amplify DataStore
+
+
+
+## 💫 Deploy to AWS Amplify
+
+[![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/sigitp-git/s3fileupload-react-amplify)
+
+
+
+## App ScreenShots
+
+### Fetching Expenses Async Function
+
+Fetching Expenses from DataStore, save to local state, shows Loading Page during async fetching process.
+
+If you have fast network speed, you might only see this loading page for a very short time.
+
+![](/Users/sigitp/Documents/expense-manager-amplify-datastore/public/loader.svg)
+
+### Initial App Mount
+
+- Load Amplify DataStore once, save into local state
+- State managed by React Hooks: `useSate(), useEffect(), useReducer(), useContext()`
+- Summarize total recorded expenses, calculate from State, save network cost to the back-end
+- Default filter by Date
+- Default startDate and endDate filter to the current month
+- All filters state managed locally, not synced with Amplify DataStore to save cost
+
+
+
+![](/Users/sigitp/Documents/expense-manager-amplify-datastore/index.png)
+
+
+
+### Cleared Date Range Picker Selection
+
+Cleared Date Range Picker Selection shows all expenses recorded
+
+![](/Users/sigitp/Documents/expense-manager-amplify-datastore/filters1.png)
+
+
+
+### Sort By Amount
+
+Shows highest amount then to the lowest amount
+
+![](/Users/sigitp/Documents/expense-manager-amplify-datastore/filters2.png)
+
+
+
+### Search Expenses
+
+Simple Array search to find expense based on description or notes
+
+![](/Users/sigitp/Documents/expense-manager-amplify-datastore/search.png)
+
+
+
+## GraphQL Schema
+
+```javascript
+type Expense @model {
+  id: ID!
+  createdAt: Float!
+  description: String!
+  amount: Float!
+  note: String
+}
+```
+
+
+
+id:ID! => mandatory ID, provided by DynamoDB item ID
+
+createdAt => UNIX Timestamp, stored as Float
+
+description, note => stored as String, description is mandatory
+
+amount => stored as Float, mandatory
+
+
+
+## Amplify DataStore Specific Code
+
+### Fetching Data Async Function
+
+Fetching Expenses from DataStore, save to local state, shows Loading Page during async fetching process.
+
+If you have fast network speed, you might only see this loading page for a very short time, source: `src/index.js`
+
+```javascript
+let expensesDS
+const fetchExpenses = async () => {
+  expensesDS = await DataStore.query(Expense, Predicates.ALL)
+}
+
+ReactDOM.render(<Loading />, document.getElementById('root'))
+
+let hasRendered = false
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(
+      <React.StrictMode>
+        <App expenses={expensesDS} />
+      </React.StrictMode>,
+      document.getElementById('root')
+    )
+    hasRendered = true
+  }
+}
+
+fetchExpenses().then(() => renderApp())
+```
+
+
+
+### Initial Load from Amplify DataStore to local State
+
+Source: `src/App.js`
+
+```javascript
+  // Expenses state
+  const [expenses, dispatchExpenses] = useReducer(expenseReducer, [])
+
+  // Fetch expenses from DataStore, put into expenses state, just once during initial mount
+  useEffect(() => {
+    if (!!props.expenses) {
+      dispatchExpenses({
+        type: 'FETCH_EXPENSES',
+        expenses: props.expenses,
+      })
+    }
+  }, [props.expenses])
+```
+
+
+
+### Remove Data from local State and Amplify DataStore
+
+Source: `src/components/Edit.js`
+
+```javascript
+  // Remove expense from DataStore
+  const rmExpenseFrDS = async (id) => {
+    const toDelete = await DataStore.query(Expense, id)
+    DataStore.delete(toDelete)
+  }
+  
+    const onHandleDelete = () => {
+    dispatchExpenses({
+      type: 'RM_EXPENSE',
+      id: props.match.params.id,
+    })
+    // Save expense to Datastore
+    rmExpenseFrDS(props.match.params.id).then(() => props.history.push('/'))
+  }
+```
+
+
+
+### Update Data to local State and Amplify DataStore
+
+Source: `src/components/Edit.js`
+
+```javascript
+  // Save updated expense to DataStore
+  const updateExpenseToDS = async ({
+    id,
+    createdAt,
+    description,
+    amount,
+    note,
+  }) => {
+    const toUpdate = await DataStore.query(Expense, id)
+    await DataStore.save(
+      Expense.copyOf(toUpdate, (updated) => {
+        updated.createdAt = parseFloat(createdAt)
+        updated.description = description
+        updated.amount = amount
+        updated.note = note
+      })
+    )
+  }
+  
+            onSubmit={({ createdAt, description, amount, note }) => {
+            dispatchExpenses({
+              type: 'EDIT_EXPENSE',
+              id: props.match.params.id,
+              expense: { createdAt, description, amount, note },
+            })
+            updateExpenseToDS({
+              id: props.match.params.id,
+              createdAt,
+              description,
+              amount,
+              note,
+            }).then(() => props.history.push('/'))
+          }}
+```
+
+
+
+## Available Scripts, from Create React App
 
 In the project directory, you can run:
 
@@ -49,42 +260,4 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

@@ -12,7 +12,7 @@ const Edit = (props) => {
     (expense) => expense.id === props.match.params.id
   )
 
-  // Save expense to DataStore
+  // Remove expense from DataStore
   const rmExpenseFrDS = async (id) => {
     const toDelete = await DataStore.query(Expense, id)
     DataStore.delete(toDelete)
