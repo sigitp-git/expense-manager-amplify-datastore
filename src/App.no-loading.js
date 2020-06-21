@@ -4,23 +4,33 @@ import Context from './context/context'
 import AppRouter from './router/AppRouter'
 import expenseReducer from './reducer/expense-reducer'
 import filterReducer from './reducer/filter-reducer'
-// Amplify DataStore
-import { DataStore } from '@aws-amplify/datastore'
+// AWS Amplify
+import Amplify from '@aws-amplify/core'
+import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { Expense } from './models'
+import awsConfig from './aws-exports'
 
-const App = (props) => {
+Amplify.configure(awsConfig)
+
+
+const App = () => {
   // Expenses state
   const [expenses, dispatchExpenses] = useReducer(expenseReducer, [])
 
-  // Fetch expenses from DataStore, put into expenses state, just once during initial mount
-  useEffect(() => {
-    if (!!props.expenses) {
+  const fetchExpenses = async () => {
+    const expensesDS = await DataStore.query(Expense, Predicates.ALL)
+    if (!!expensesDS) {
       dispatchExpenses({
         type: 'FETCH_EXPENSES',
-        expenses: props.expenses,
+        expenses: expensesDS,
       })
     }
-  }, [props.expenses])
+  }
+
+  // Fetch expenses from DataStore, put into expenses state, just once during initial mount
+  useEffect(() => {
+    fetchExpenses()
+  }, [])
 
   // Filters state
   const date = new Date(),
@@ -52,7 +62,7 @@ const App = (props) => {
         filters,
         dispatchFilters,
         DataStore,
-        Expense,
+        Expense
       }}
     >
       <AppRouter />

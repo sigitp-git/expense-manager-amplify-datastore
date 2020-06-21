@@ -5,7 +5,7 @@ import unixToString from './UnixTStoString'
 
 const Item = ({ id, createdAt, description, note, amount }) => {
   const stringTimeStamp = unixToString(createdAt)
-
+  
   return (
     <Link className='list-item' to={`edit/${id}`}>
       <div>

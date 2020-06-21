@@ -5,10 +5,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - All States managed by React Hooks, no Redux
 - States:
     - expenses (only sync expenses state), default: empty array []
-        - date
-        - title
-        - amount
-        - note
+        - id (ID!)
+        - date (UNIX Timestamp, Int!)
+        - description (String!)
+        - amount (String! -> ParseFloat)
+        - note (String)
     - filters
         - text, default: ''
         - sortBy, default: 'date', other option: 'amount'

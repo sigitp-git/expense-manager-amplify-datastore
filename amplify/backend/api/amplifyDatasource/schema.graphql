@@ -1,0 +1,7 @@
+type Expense @model {
+  id: ID!
+  createdAt: Float!
+  description: String!
+  amount: Float!
+  note: String
+}

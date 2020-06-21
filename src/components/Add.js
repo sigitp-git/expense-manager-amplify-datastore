@@ -6,7 +6,18 @@ import { v4 as uuidv4 } from 'uuid'
 import Header from './Header'
 
 const Add = (props) => {
-  const { dispatchExpenses } = useContext(Context)
+  const { dispatchExpenses, DataStore, Expense } = useContext(Context)
+
+  // Save expense to DataStore
+  const saveExpenseToDS = async ({ createdAt, description, amount, note }) =>
+    await DataStore.save(
+      new Expense({
+        createdAt,
+        description,
+        amount,
+        note,
+      })
+    )
 
   return (
     <>
@@ -25,7 +36,10 @@ const Add = (props) => {
               type: 'ADD_EXPENSE',
               expense: { id: uuidv4(), createdAt, description, amount, note },
             })
-            props.history.push('/')
+            // Save expense to DataStore
+            saveExpenseToDS({ createdAt, description, amount, note }).then(() =>
+              props.history.push('/')
+            )
           }}
         />
       </div>

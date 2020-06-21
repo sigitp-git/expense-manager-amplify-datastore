@@ -1,0 +1,15 @@
+{
+    "amplify": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-expense-manager-amplify-192512-authRole",
+            "UnauthRoleArn": "arn:aws:iam::989480987093:role/amplify-expense-manager-amplify-192512-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::989480987093:role/amplify-expense-manager-amplify-192512-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-expense-manager-amplify-192512-deployment",
+            "UnauthRoleName": "amplify-expense-manager-amplify-192512-unauthRole",
+            "StackName": "amplify-expense-manager-amplify-192512",
+            "StackId": "arn:aws:cloudformation:us-east-1:989480987093:stack/amplify-expense-manager-amplify-192512/ad6941d0-b355-11ea-ae95-0a39c55408a9",
+            "AmplifyAppId": "d2rl42lz089enp"
+        }
+    }
+}
