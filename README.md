@@ -48,7 +48,7 @@ Fetching Expenses from DataStore, save to local state, shows Loading Page during
 
 If you have fast network speed, you might only see this loading page for a very short time.
 
-![](/Users/sigitp/Documents/expense-manager-amplify-datastore/public/loader.svg)
+![](https://raw.githubusercontent.com/sigitp-git/expense-manager-amplify-datastore/master/public/loader.svg)
 
 ### Initial App Mount
 
@@ -61,7 +61,7 @@ If you have fast network speed, you might only see this loading page for a very 
 
 
 
-![](/Users/sigitp/Documents/expense-manager-amplify-datastore/index.png)
+![](https://github.com/sigitp-git/expense-manager-amplify-datastore/blob/master/index.png?raw=true)
 
 
 
@@ -69,7 +69,7 @@ If you have fast network speed, you might only see this loading page for a very 
 
 Cleared Date Range Picker Selection shows all expenses recorded
 
-![](/Users/sigitp/Documents/expense-manager-amplify-datastore/filters1.png)
+![](https://github.com/sigitp-git/expense-manager-amplify-datastore/blob/master/filters1.png?raw=true)
 
 
 
@@ -77,7 +77,7 @@ Cleared Date Range Picker Selection shows all expenses recorded
 
 Shows highest amount then to the lowest amount
 
-![](/Users/sigitp/Documents/expense-manager-amplify-datastore/filters2.png)
+![](https://github.com/sigitp-git/expense-manager-amplify-datastore/blob/master/filters2.png?raw=true)
 
 
 
@@ -85,7 +85,7 @@ Shows highest amount then to the lowest amount
 
 Simple Array search to find expense based on description or notes
 
-![](/Users/sigitp/Documents/expense-manager-amplify-datastore/search.png)
+![](https://github.com/sigitp-git/expense-manager-amplify-datastore/blob/master/search.png?raw=true)
 
 
 
